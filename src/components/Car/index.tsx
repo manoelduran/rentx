@@ -2,23 +2,38 @@ import React from 'react';
 import GasolineSvg from '../../assets/gasoline.svg';
 import { Container, DataContainer, Image, Brand, Name, About, Rent, Period, Price, Type } from './styles';
 
-export function Car() {
+interface CardProps{
+    brand: string,
+    name: string,
+    rent: {
+        period: string,
+        price: number
+    },
+    thumbnail: string
+}
+
+interface Props {
+    data: CardProps
+}
+
+export function Car({data}: Props) {
     return (
         <Container>
             <DataContainer>
-                <Brand>AUDI</Brand>
-                <Name>RS 5 Coupé</Name>
+                <Brand>{data.brand}</Brand>
+                <Name>{data.name}</Name>
                 <About>
                     <Rent>
-                        <Period>Ao dia</Period>
-                        <Price>R$ 120</Price>
+                        <Period>{data.rent.period}</Period>
+                        <Price>{` R$ ${data.rent.price}`}</Price>
                     </Rent>
                     <Type>
-                        <GasolineSvg />
+                        <GasolineSvg   />
                     </Type>
                 </About>
             </DataContainer>
-            <Image source={{ uri: '' }} />
+            <Image source={{ uri: data.thumbnail}} resizeMode="contain"/>
         </Container>
     );
 }
+
