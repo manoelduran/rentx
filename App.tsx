@@ -7,6 +7,9 @@ import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components'
 import theme from './src/styles/theme'
 import { CarDetails } from './src/screens/CarDetails';
+import { Schedule } from './src/screens/Schedule';
+import { ScheduleDetails } from './src/screens/ScheduleDetails';
+import { SuccessSchedule } from './src/screens/SuccessSchedule';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,7 +25,7 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <CarDetails />
+        <SuccessSchedule/>
       </ThemeProvider>
     </>
   );
