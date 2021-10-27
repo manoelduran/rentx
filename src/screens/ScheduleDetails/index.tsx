@@ -13,10 +13,14 @@ import PeopleSvg from '../../assets/people.svg';
 import { Button } from '../../components/Button';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
-
+import { useNavigation } from '@react-navigation/native';
 
 export function ScheduleDetails() {
     const theme = useTheme();
+    const navigation = useNavigation()
+    function handleSuccessSchedule(){
+        navigation.navigate('SuccessSchedule');
+    }
     return (
         <Container>
             <Header>
@@ -75,7 +79,7 @@ export function ScheduleDetails() {
                 </TotalContainer>
             </Content>
             <Footer>
-                <Button title="Alugar agora"  color={theme.colors.success}/>
+                <Button title="Alugar agora"  color={theme.colors.success} onPress={handleSuccessSchedule}/>
             </Footer>
         </Container>
     );

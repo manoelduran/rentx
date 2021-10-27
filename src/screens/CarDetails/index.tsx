@@ -10,10 +10,14 @@ import GasolineSvg from '../../assets/gasoline.svg';
 import ExchangeSvg from '../../assets/exchange.svg';
 import PeopleSvg from '../../assets/people.svg';
 import { Button } from '../../components/Button';
-import theme from '../../styles/theme';
+import { useNavigation } from '@react-navigation/native';
 
 
 export function CarDetails() {
+    const navigation = useNavigation()
+    function handleCalendar(){
+        navigation.navigate('Schedule');
+    }
     return (
         <Container>
             <Header>
@@ -45,7 +49,7 @@ export function CarDetails() {
                 </Description>
             </Content>
             <Footer>
-                <Button title="Escolher período do aluguel" />
+                <Button title="Escolher período do aluguel"  onPress={handleCalendar}/>
             </Footer>
         </Container>
     );
