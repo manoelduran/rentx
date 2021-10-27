@@ -14,6 +14,9 @@ export function Schedule() {
     function handleScheduleDetails(){
         navigation.navigate('ScheduleDetails');
     }
+    function handleBack(){
+        navigation.goBack()
+    }
     return (
         <Container>
             <Header>
@@ -24,7 +27,7 @@ export function Schedule() {
                 />
                 <BackButton
                     color={theme.colors.shape}
-                    onPress={() => { }} />
+                    onPress={handleBack} />
                 <Title>
                     Escolha uma {'\n'}
                     data de início e {'\n'}

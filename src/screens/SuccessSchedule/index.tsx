@@ -9,9 +9,10 @@ import { useNavigation } from '@react-navigation/native';
 export function SuccessSchedule() {
     const { width } = useWindowDimensions();
     const navigation = useNavigation()
-    function handleHome(){
+    function handleHome() {
         navigation.navigate("Home")
     }
+
     return (
         <Container>
             <StatusBar
@@ -32,7 +33,7 @@ export function SuccessSchedule() {
                 </SuccessText>
             </Content>
             <Footer>
-                <SuccessButton title="OK"  onPress={handleHome}/>
+                <SuccessButton title="OK" onPress={handleHome} />
             </Footer>
         </Container>
     );

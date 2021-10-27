@@ -3,53 +3,56 @@ import { Accessory } from '../../components/Accessory';
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
 import { Container, Header, CarImages, Details, Brand, Name, Rent, Period, Price, Content, Info, CarSkills, Description, Footer } from './styles';
-import SpeedSvg from '../../assets/speed.svg';
-import AccelerationSvg from '../../assets/acceleration.svg';
-import ForceSvg from '../../assets/force.svg';
-import GasolineSvg from '../../assets/gasoline.svg';
-import ExchangeSvg from '../../assets/exchange.svg';
-import PeopleSvg from '../../assets/people.svg';
 import { Button } from '../../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 
+interface Params {
+    car: Car;
+};
 
 export function CarDetails() {
-    const navigation = useNavigation()
-    function handleCalendar(){
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { car } = route.params as Params;
+    function handleCalendar() {
         navigation.navigate('Schedule');
+    }
+    function handleBack() {
+        navigation.goBack()
     }
     return (
         <Container>
             <Header>
-                <BackButton onPress={() => { }} />
+                <BackButton onPress={handleBack} />
             </Header>
             <CarImages>
-                <ImageSlider imagesUrl={['https://e7.pngegg.com/pngimages/790/861/png-clipart-2018-audi-rs-5-car-audi-s5-audi-a5-audi-rs5-car-performance-car.png']} />
+                <ImageSlider imagesUrl={car.photos} />
             </CarImages>
             <Content>
                 <Details>
                     <Info>
-                        <Brand>LAMBORGUINI</Brand>
-                        <Name>Huracan</Name>
+                        <Brand>{car.brand}</Brand>
+                        <Name>{car.name}</Name>
                     </Info>
                     <Rent>
-                        <Period>AO DIA</Period>
-                        <Price>R$ 580</Price>
+                        <Period>{car.rent.period}</Period>
+                        <Price>R$ {car.rent.price}</Price>
                     </Rent>
                 </Details>
                 <CarSkills>
-                    <Accessory name="380Km/h" icon={SpeedSvg} />
-                    <Accessory name="3.2s" icon={AccelerationSvg} />
-                    <Accessory name="800 HP" icon={ForceSvg} />
-                    <Accessory name="Gasolina" icon={GasolineSvg} />
-                    <Accessory name="Auto" icon={ExchangeSvg} />
-                    <Accessory name="2 pessoas" icon={PeopleSvg} />
+                    {car.accessories.map(accessory => (
+                        <Accessory key={accessory.type} name={accessory.name} icon={getAccessoryIcon(accessory.type)} />
+                    ))
+
+                    }
                 </CarSkills>
-                <Description>Este é automóvel desportivo. Surgiu do lendário touro de lide indultado na praça Real Maestranza de Sevilla. É um belíssimo carro para quem gosta de acelerar.
+                <Description>
+                    {car.about}
                 </Description>
             </Content>
             <Footer>
-                <Button title="Escolher período do aluguel"  onPress={handleCalendar}/>
+                <Button title="Escolher período do aluguel" onPress={handleCalendar} />
             </Footer>
         </Container>
     );

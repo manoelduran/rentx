@@ -27,8 +27,8 @@ export function Home() {
         fetchCarList()
     }, [])
 
-    function handleCarDetails() {
-        navigation.navigate('CarDetails');
+    function handleCarDetails(car: Car) {
+        navigation.navigate('CarDetails', {car});
     }
     return (
         <Container>
@@ -40,7 +40,7 @@ export function Home() {
             <Header>
                 <Logo width={RFValue(108)} height={RFValue(12)} />
                 <TotalCars>
-                    Total de 12 carros
+                   Total de {carList.length} carros
                 </TotalCars>
             </Header>
             {loading ?
@@ -49,7 +49,7 @@ export function Home() {
                     data={carList}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) =>
-                        <Car data={item} onPress={handleCarDetails} />}
+                        <Car data={item} onPress={() => handleCarDetails(item)} />}
                 />}
 
         </Container>
