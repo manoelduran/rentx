@@ -25,7 +25,7 @@ font-family: ${({ theme }) => theme.fonts.primary_400};
 color: ${({ theme }) => theme.colors.text};
 `;
 
-export const CarList = styled(FlatList).attrs({
+export const CarList = styled(FlatList as new () =>FlatList<Car>).attrs({
     contentContainerStyle: {
         padding: 24
     },

@@ -1,9 +1,10 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "https://localhost:3000",
+    baseURL: "http://192.168.15.11:3333",
 })
 
-export async function getCars(): Promise<void> {
-    const result = await api.get('/cars')
+export async function searchCars(): Promise<Car[]> {
+    const result = await api.get<Car[]>('/cars')
+    return result.data
 }
