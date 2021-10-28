@@ -16,7 +16,9 @@ export function CarDetails() {
     const route = useRoute();
     const { car } = route.params as Params;
     function handleCalendar() {
-        navigation.navigate('Schedule');
+        navigation.navigate('Schedule', {
+            car
+        });
     }
     function handleBack() {
         navigation.goBack()
