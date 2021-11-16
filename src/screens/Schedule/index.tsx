@@ -3,7 +3,7 @@ import { useTheme } from 'styled-components';
 import { BackButton } from '../../components/BackButton';
 import ArrowSvg from '../../assets/arrow.svg';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Alert, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { Button } from '../../components/Button';
 import { Calendar, DayProps, MarkedDateProps, generateInterval } from '../../components/Calendar';
 import { format } from 'date-fns/esm';
@@ -29,14 +29,10 @@ export function Schedule() {
     const route = useRoute();
     const { car } = route.params as Params;
     function handleScheduleDetails() {
-        if (!rentalPeriod.startFormatted || !rentalPeriod.endFormatted) {
-            Alert.alert("Selecione o intervalo para alugar")
-        } else {
-            navigation.navigate('ScheduleDetails', {
-                car,
-                dates: Object.keys(markedDates),
-            })
-        }
+        navigation.navigate('ScheduleDetails', {
+            car,
+            dates: Object.keys(markedDates),
+        })
     }
     function handleBack() {
         navigation.goBack()
@@ -94,7 +90,11 @@ export function Schedule() {
                 />
             </Content>
             <Footer>
-                <Button title="Confirmar" color={theme.colors.main} onPress={handleScheduleDetails} />
+                <Button
+                    enabled={!!rentalPeriod.startFormatted}
+                    title="Confirmar"
+                    color={theme.colors.main}
+                    onPress={handleScheduleDetails} />
             </Footer>
         </Container>
     );

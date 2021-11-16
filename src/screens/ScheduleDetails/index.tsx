@@ -26,20 +26,22 @@ interface Params {
 
 export function ScheduleDetails() {
     const [rentalPeriod, setRentalPeriod] = useState<RentalPeriodProps>({} as RentalPeriodProps)
+    const [loading, setLoading] = useState(false)
     const theme = useTheme();
     const navigation = useNavigation()
     const route = useRoute();
     const { car, dates } = route.params as Params;
     const rentTotal = Number(dates.length * car.rent.price)
     async function handleSuccessSchedule() {
+        setLoading(true);
         const response = await api.get(`/schedules_bycars/${car.id}`);
 
         const unavailable_dates = [
             ...response.data.unavailable_dates,
             ...dates,
         ];
-         await api.post('schedules_byuser', {
-             user_id: 1,
+        await api.post('schedules_byuser', {
+            user_id: 1,
             car,
             startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
             endDate: format(getPlatformDate(new Date(dates[dates.length - 1])), 'dd/MM/yyyy')
@@ -48,7 +50,10 @@ export function ScheduleDetails() {
             id: car.id,
             unavailable_dates
         }).then(() => navigation.navigate('SuccessSchedule'))
-            .catch(() => Alert.alert('Não foi possivel confirmar o agendamento'))
+            .catch(() => {
+                setLoading(false);
+                Alert.alert('Não foi possivel confirmar o agendamento')
+            })
 
     };
     function handleBack() {
@@ -117,7 +122,7 @@ export function ScheduleDetails() {
                 </TotalContainer>
             </Content>
             <Footer>
-                <Button title="Alugar agora" color={theme.colors.success} onPress={handleSuccessSchedule} />
+                <Button title="Alugar agora" color={theme.colors.success} onPress={handleSuccessSchedule} enabled={!loading} loading={loading} />
             </Footer>
         </Container>
     );
