@@ -24,7 +24,8 @@ export function StackRoutes() {
             <Screen
                 name="Home"
                 options={{
-                    headerShown: false
+                    headerShown: false,
+                    gestureEnabled: false,
                 }}
                 component={Home}
             />
