@@ -10,7 +10,9 @@ export function LoadAnimation(){
             <LottieView
                 source={AnimatedLoad}
                 style={{height: 200}}
+                resizeMode="contain" // ajusta a proporção da imagem
                 autoPlay
+                loop // caso demore mais para carregar os dados a animação não para
             />
         </Container>
     );
