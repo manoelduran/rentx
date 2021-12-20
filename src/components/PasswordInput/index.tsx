@@ -11,31 +11,50 @@ import {
 import { TextInputProps } from 'react-native';
 
 interface InputProps extends TextInputProps {
-    iconName: React.ComponentProps<typeof Feather>['name']
+    iconName: React.ComponentProps<typeof Feather>['name'];
+    value?: string;
 }
 
-export function PasswordInput({ iconName, ...rest }: InputProps) {
+export function PasswordInput({ iconName, value, ...rest }: InputProps) {
     const [isVisible, setIsVisible] = useState(true);
+    const [isFilled, setIsFilled] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
     const theme = useTheme();
-    function handleVisiblePassword(){
+    function handleVisiblePassword() {
         setIsVisible(oldState => !oldState);
     }
+    function handleInputFocused() {
+        setIsFocused(true);
+    }
+    function handleInputBlur() {
+        setIsFocused(false);
+        setIsFilled(!!value)
+    }
     return (
-        <Container>
-            <IconContainer>
+        <Container
+
+        >
+            <IconContainer
+                isFocused={isFocused}
+            >
                 <Feather
                     name={iconName}
                     size={24}
-                    color={theme.colors.text_datails}
+                    color={(isFocused || isFilled) ? theme.colors.main : theme.colors.text_datails}
                 />
             </IconContainer>
-            <Separetor />
+            <Separetor
+                isFocused={isFocused}
+            />
             <InputText
                 {...rest}
+                onFocus={handleInputFocused}
+                onBlur={handleInputBlur}
+                isFocused={isFocused}
                 secureTextEntry={isVisible ? false : true}
             />
             <ChangePasswordVisibilityButton
-            onPress={handleVisiblePassword}
+                onPress={handleVisiblePassword}
             >
                 <Feather
                     name={isVisible ? 'eye' : 'eye-off'}
