@@ -30,5 +30,5 @@ width: 100%;
 margin: 64px 0;
 `;
 export const Footer = styled.View`
-
+margin-top: -8px;
 `;

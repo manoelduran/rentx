@@ -1,10 +1,11 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Keyboard, KeyboardAvoidingView, StatusBar, TouchableWithoutFeedback } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Alert, Keyboard, KeyboardAvoidingView, StatusBar, TouchableWithoutFeedback } from 'react-native';
+import { useTheme } from 'styled-components';
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
 import { Button } from '../../../components/Button';
-import { Input } from '../../../components/Input';
+import { PasswordInput } from '../../../components/PasswordInput';
 import {
     Container,
     Header,
@@ -13,11 +14,37 @@ import {
     Form
 } from './styles';
 
+interface Params {
+    user: {
+        name: string;
+        email: string;
+        cnh: string;
+    }
+}
+
 export function RegisterSecondStep() {
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const theme = useTheme();
+    const route = useRoute();
+    const { user } = route.params as Params;
+    console.log(user)
     const navigation = useNavigation();
     function handleBack() {
         navigation.goBack()
     };
+    function handleRegister() {
+        if (!password || !passwordConfirm) {
+            return Alert.alert('Informe a senha e a confirmação!')
+        }
+        if (password !== passwordConfirm) {
+            return Alert.alert('As senhas precisam ser iguais!')
+        }
+        if (password === passwordConfirm && !!user) {
+            Alert.alert('Conta registrada com sucesso!')
+            navigation.navigate('Confirmation')
+        }
+    }
     return (
         <KeyboardAvoidingView behavior='position' enabled>
             <TouchableWithoutFeedback
@@ -32,27 +59,29 @@ export function RegisterSecondStep() {
                     <Header>
                         <BackButton onPress={handleBack} />
                         <Bullets>
-                            <Bullet  />
-                            <Bullet  active/>
+                            <Bullet />
+                            <Bullet active />
                         </Bullets>
                     </Header>
-                    <InputLabel>1. Dados</InputLabel>
+                    <InputLabel>2. Senha</InputLabel>
                     <Form>
-                        <Input
-                            iconName="user"
-                            placeholder='Name'
+                        <PasswordInput
+                            iconName='lock'
+                            placeholder='Senha'
+                            value={password}
+                            onChangeText={setPassword}
                         />
-                        <Input
-                            iconName="mail"
-                            placeholder='E-mail'
-                        />
-                        <Input
-                            iconName="credit-card"
-                            placeholder='CNH'
+                        <PasswordInput
+                            iconName='lock'
+                            placeholder='Repetir senha'
+                            value={passwordConfirm}
+                            onChangeText={setPasswordConfirm}
                         />
                     </Form>
                     <Button
-                        title='Próximo'
+                        title='Cadastrar'
+                        color={theme.colors.success}
+                        onPress={handleRegister}
                     />
                 </Container>
             </TouchableWithoutFeedback>

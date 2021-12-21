@@ -49,7 +49,7 @@ export function ScheduleDetails() {
         api.put(`/schedules_bycars/${car.id}`, {
             id: car.id,
             unavailable_dates
-        }).then(() => navigation.navigate('SuccessSchedule'))
+        }).then(() => navigation.navigate('Confirmation'))
             .catch(() => {
                 setLoading(false);
                 Alert.alert('Não foi possivel confirmar o agendamento')

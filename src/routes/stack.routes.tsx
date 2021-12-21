@@ -5,12 +5,12 @@ import { Home } from '../screens/Home';
 import { CarDetails } from '../screens/CarDetails';
 import { Schedule } from '../screens/Schedule';
 import { ScheduleDetails } from '../screens/ScheduleDetails';
-import { SuccessSchedule } from '../screens/SuccessSchedule';
 import { MyCars } from '../screens/MyCars';
 import { Splash } from '../screens/Splash';
 import { SignIn } from '../screens/SignIn';
 import { RegisterFirstStep } from '../screens/Register/RegisterFirstStep';
 import { RegisterSecondStep } from '../screens/Register/RegisterSecondStep';
+import { Confirmation } from '../screens/Confirmation';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -85,11 +85,11 @@ export function StackRoutes() {
                 component={ScheduleDetails}
             />
             <Screen
-                name="SuccessSchedule"
+                name="Confirmation"
                 options={{
                     headerShown: false
                 }}
-                component={SuccessSchedule}
+                component={Confirmation}
             />
         </Navigator>
     );
