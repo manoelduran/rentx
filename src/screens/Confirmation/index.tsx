@@ -4,18 +4,20 @@ import LogoSvg from '../../assets/logogray.svg';
 import DoneSvg from '../../assets/done.svg';
 import { Container, Content, SuccessTitle, SuccessText, Footer } from './styles';
 import { SuccessButton } from '../../components/SuccessButton';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-interface ConfirmationProps{
+interface Params {
     title: string;
-    messsage: string;
+    message: string;
     nextScreen: string;
 }
 
-export function Confirmation({title, messsage, nextScreen}: ConfirmationProps) {
+export function Confirmation() {
     const { width } = useWindowDimensions();
+    const route = useRoute();
+    const { title, message, nextScreen } = route.params as Params;
     const navigation = useNavigation()
-    function handleHome() {
+    function handleRoute() {
         navigation.navigate(nextScreen)
     }
 
@@ -33,11 +35,11 @@ export function Confirmation({title, messsage, nextScreen}: ConfirmationProps) {
                     {title}
                 </SuccessTitle>
                 <SuccessText>
-                   {messsage}
+                    {message}
                 </SuccessText>
             </Content>
             <Footer>
-                <SuccessButton title="OK" onPress={handleHome} />
+                <SuccessButton title="OK" onPress={handleRoute} />
             </Footer>
         </Container>
     );

@@ -42,7 +42,11 @@ export function RegisterSecondStep() {
         }
         if (password === passwordConfirm && !!user) {
             Alert.alert('Conta registrada com sucesso!')
-            navigation.navigate('Confirmation')
+            navigation.navigate('Confirmation', {
+                nextScreen: 'SignIn',
+                title: 'Conta criada!',
+                message: `Agora é só fazer login \n  e aproveitar!`
+            });
         }
     }
     return (
