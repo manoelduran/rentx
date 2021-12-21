@@ -8,7 +8,7 @@ interface Props{
 
 export const Container = styled.View`
 flex-direction: row;
-
+margin-bottom: 8px;
 `;
 export const IconContainer = styled.View<Props>`
 height: 56px;
@@ -41,9 +41,9 @@ color: ${({theme}) => theme.colors.text};
 font-family: ${({theme}) => theme.fonts.primary_400};
 font-size: ${RFValue(15)}px;
 padding: 0 23px;
+
 ${({theme, isFocused}) => isFocused && css`
     border-bottom-width: 2px;
     border-bottom-color: ${theme.colors.main};
-
 `}
 `;

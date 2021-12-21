@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
     StatusBar,
@@ -22,6 +23,7 @@ import {
 } from './styles';
 
 export function SignIn() {
+    const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     async function handleSignIn() {
@@ -48,6 +50,9 @@ export function SignIn() {
             return true;
         })
     }, []) // faz n voltar para a tela de splash
+    function handleRegister(){
+        navigation.navigate('RegisterFirstStep')
+    }
     return (
         <KeyboardAvoidingView
             behavior="position"
@@ -100,7 +105,7 @@ export function SignIn() {
                             title="Criar conta gratuita"
                             light={true}
                             color={theme.colors.background_secundary}
-                            onPress={() => { }}
+                            onPress={handleRegister}
                             loading={false}
                         />
                     </Footer>

@@ -8,7 +8,6 @@ interface Props {
 }
 
 export const Container = styled.View`
-margin-top: 8px;
 flex-direction: row;
 
 `;

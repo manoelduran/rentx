@@ -9,6 +9,8 @@ import { SuccessSchedule } from '../screens/SuccessSchedule';
 import { MyCars } from '../screens/MyCars';
 import { Splash } from '../screens/Splash';
 import { SignIn } from '../screens/SignIn';
+import { RegisterFirstStep } from '../screens/Register/RegisterFirstStep';
+import { RegisterSecondStep } from '../screens/Register/RegisterSecondStep';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -29,6 +31,22 @@ export function StackRoutes() {
                     gestureEnabled: false,
                 }}
                 component={SignIn}
+            />
+            <Screen
+                name="RegisterFirstStep"
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false,
+                }}
+                component={RegisterFirstStep}
+            />
+            <Screen
+                name="RegisterSecondStep"
+                options={{
+                    headerShown: false,
+                    gestureEnabled: false,
+                }}
+                component={RegisterSecondStep}
             />
             <Screen
                 name="Home"
