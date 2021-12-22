@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, BackHandler } from 'react-native'
+import { StatusBar, StyleSheet } from 'react-native'
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -62,13 +62,6 @@ export function Home() {
         }
         fetchCarList()
     }, []);
-
-    useEffect(() => {
-        BackHandler.addEventListener('hardwareBackPress', () => {
-            return true;
-        })
-    }, []) // faz n voltar para a tela de splash
-
     function handleCarDetails(car: Car) {
         navigation.navigate('CarDetails', { car });
     }

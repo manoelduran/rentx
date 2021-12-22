@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import { Button } from '../../components/Button';
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
+import { useAuth } from "../../hooks/auth";
 import theme from "../../styles/theme";
 import {
     Container,
@@ -26,6 +27,7 @@ export function SignIn() {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { signIn } = useAuth();
     async function handleSignIn() {
         try {
             const schema = Yup.object().shape({
@@ -36,11 +38,14 @@ export function SignIn() {
                     .required('A senha é obrigatória')
             });
             await schema.validate({ email, password })
-            Alert.alert('Validação correta!')
+            if (!!schema.validate({ email, password })) {
+                signIn({ email, password })
+                navigation.navigate('Home')
+            }
         } catch (err) {
-            if(err instanceof Yup.ValidationError){
+            if (err instanceof Yup.ValidationError) {
                 return Alert.alert('Algo errado com a validação', err.message)
-            } else{
+            } else {
                 Alert.alert('Erro na autenticação')
             }
         }
@@ -50,7 +55,7 @@ export function SignIn() {
             return true;
         })
     }, []) // faz n voltar para a tela de splash
-    function handleRegister(){
+    function handleRegister() {
         navigation.navigate('RegisterFirstStep')
     }
     return (

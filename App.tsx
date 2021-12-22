@@ -5,6 +5,7 @@ import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components'
 import theme from './src/styles/theme'
 import { Routes } from './src/routes';
+import { AuthProvider } from './src/hooks/auth';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -18,10 +19,10 @@ export default function App() {
     return <AppLoading />
   }
   return (
-    <>
+    <AuthProvider>
       <ThemeProvider theme={theme}>
         <Routes />
       </ThemeProvider>
-    </>
+    </AuthProvider>
   );
 }

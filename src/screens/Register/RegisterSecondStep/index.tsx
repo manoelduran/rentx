@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { api } from '../../../services/api';
 import { Alert, Keyboard, KeyboardAvoidingView, StatusBar, TouchableWithoutFeedback } from 'react-native';
 import { useTheme } from 'styled-components';
 import { BackButton } from '../../../components/BackButton';
@@ -33,7 +34,7 @@ export function RegisterSecondStep() {
     function handleBack() {
         navigation.goBack()
     };
-    function handleRegister() {
+    async function handleRegister() {
         if (!password || !passwordConfirm) {
             return Alert.alert('Informe a senha e a confirmação!')
         }
@@ -41,14 +42,25 @@ export function RegisterSecondStep() {
             return Alert.alert('As senhas precisam ser iguais!')
         }
         if (password === passwordConfirm && !!user) {
-            Alert.alert('Conta registrada com sucesso!')
-            navigation.navigate('Confirmation', {
-                nextScreen: 'SignIn',
-                title: 'Conta criada!',
-                message: `Agora é só fazer login \n  e aproveitar!`
-            });
-        }
-    }
+            await api.post('/users', {
+                name: user.name,
+                email: user.email,
+                driver_license: user.cnh,
+                password
+            })
+                .then(() => {
+                    Alert.alert('Conta registrada com sucesso!')
+                    navigation.navigate('Confirmation', {
+                        nextScreen: 'SignIn',
+                        title: 'Conta criada!',
+                        message: `Agora é só fazer login \n  e aproveitar!`
+                    });
+                })
+                .catch(() => {
+                    Alert.alert('Opa', 'Não foi possivel cadastrar')
+                } )
+        };
+    };
     return (
         <KeyboardAvoidingView behavior='position' enabled>
             <TouchableWithoutFeedback
