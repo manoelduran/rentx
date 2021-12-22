@@ -40,7 +40,6 @@ export function SignIn() {
             await schema.validate({ email, password })
             if (!!schema.validate({ email, password })) {
                 signIn({ email, password })
-                navigation.navigate('Home')
             }
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
