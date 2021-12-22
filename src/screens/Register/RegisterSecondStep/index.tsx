@@ -30,7 +30,7 @@ export function RegisterSecondStep() {
     const route = useRoute();
     const { user } = route.params as Params;
     console.log(user)
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     function handleBack() {
         navigation.goBack()
     };

@@ -19,7 +19,7 @@ import { RectButton, PanGestureHandler } from 'react-native-gesture-handler';
 import { LoadAnimation } from '../../components/LoadAnimation';
 
 export function Home() {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const [carList, setCarList] = useState<Car[]>([]);
     const [loading, setLoading] = useState(true);
     const theme = useTheme();

@@ -20,7 +20,7 @@ interface CarProps {
 export function MyCars() {
     const [cars, setCars] = useState<CarProps[]>([])
     const [loading, setLoading] = useState(true)
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const theme = useTheme();
     function handleBack() {
         navigation.goBack()

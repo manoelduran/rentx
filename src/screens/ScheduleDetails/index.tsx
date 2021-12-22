@@ -28,7 +28,7 @@ export function ScheduleDetails() {
     const [rentalPeriod, setRentalPeriod] = useState<RentalPeriodProps>({} as RentalPeriodProps)
     const [loading, setLoading] = useState(false)
     const theme = useTheme();
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>();
     const route = useRoute();
     const { car, dates } = route.params as Params;
     const rentTotal = Number(dates.length * car.price)

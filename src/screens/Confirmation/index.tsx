@@ -16,7 +16,7 @@ export function Confirmation() {
     const { width } = useWindowDimensions();
     const route = useRoute();
     const { title, message, nextScreen } = route.params as Params;
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>();
     function handleRoute() {
         navigation.navigate(nextScreen)
     }

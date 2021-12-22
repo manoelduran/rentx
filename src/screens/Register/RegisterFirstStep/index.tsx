@@ -21,7 +21,7 @@ export function RegisterFirstStep() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [cnh, setCnh] = useState('');
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     function handleBack() {
         navigation.goBack()
     };

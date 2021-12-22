@@ -25,7 +25,7 @@ export function Schedule() {
     const [markedDates, setMarkedDates] = useState<MarkedDateProps>({} as MarkedDateProps);
     const [rentalPeriod, setRentalPeriod] = useState<RentalPeriodProps>({} as RentalPeriodProps);
     const theme = useTheme();
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const route = useRoute();
     const { car } = route.params as Params;
     function handleScheduleDetails() {
