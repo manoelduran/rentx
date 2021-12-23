@@ -20,7 +20,7 @@ import {
 export function RegisterFirstStep() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [cnh, setCnh] = useState('');
+    const [driversLicense, setDriversLicense] = useState('');
     const navigation = useNavigation<any>();
     function handleBack() {
         navigation.goBack()
@@ -36,9 +36,9 @@ export function RegisterFirstStep() {
                 cnh: Yup.string()
                     .required('Sua CNH é obrigatória')
             });
-            await schema.validate({ name, email, cnh })
-            if (!!schema.validate({ name, email, cnh })) {
-                navigation.navigate('RegisterSecondStep', { user: { name, email, cnh } })
+            await schema.validate({ name, email, driversLicense })
+            if (!!schema.validate({ name, email, driversLicense })) {
+                navigation.navigate('RegisterSecondStep', { user: { name, email, driversLicense } })
             }
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
@@ -94,8 +94,8 @@ export function RegisterFirstStep() {
                             iconName="credit-card"
                             placeholder='CNH'
                             keyboardType='numeric'
-                            value={cnh}
-                            onChangeText={setCnh}
+                            value={driversLicense}
+                            onChangeText={setDriversLicense}
                         />
                     </Form>
                     <Button

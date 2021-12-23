@@ -22,10 +22,12 @@ interface Car {
 
 interface User {
     id: string;
+    user_id: string;
     email: string;
     name: string;
-    cnh: string;
+    driver_license: string;
     avatar: string;
+    token: string;
 }
 
 

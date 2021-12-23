@@ -19,7 +19,7 @@ interface Params {
     user: {
         name: string;
         email: string;
-        cnh: string;
+        driversLicense: string;
     }
 }
 
@@ -45,7 +45,7 @@ export function RegisterSecondStep() {
             await api.post('/users', {
                 name: user.name,
                 email: user.email,
-                driver_license: user.cnh,
+                driver_license: user.driversLicense,
                 password
             })
                 .then(() => {

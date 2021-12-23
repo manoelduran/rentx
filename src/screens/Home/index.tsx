@@ -14,17 +14,25 @@ export function Home() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        let isMounted = true;
         async function fetchCarList() {
             try {
                 const listofCars = await api.searchCars();
-                setCarList(listofCars)
+                if (isMounted) {
+                    setCarList(listofCars)
+                }
             } catch (err) {
                 console.log(err)
             } finally {
-                setLoading(false)
+                if (isMounted) {
+                    setLoading(false)
+                }
             }
         }
-        fetchCarList()
+        fetchCarList();
+        return () => {
+            isMounted = false;
+        }
     }, []);
     function handleCarDetails(car: Car) {
         navigation.navigate('CarDetails', { car });
@@ -47,8 +55,8 @@ export function Home() {
                 <LoadAnimation /> :
                 <CarList
                     data={carList}
-                    keyExtractor={item => item.id}
-                    renderItem={({ item }) =>
+                    keyExtractor={(item: Car) => item.id}
+                    renderItem={({ item }: any) =>
                         <Car data={item} onPress={() => handleCarDetails(item)} />}
                 />
             }

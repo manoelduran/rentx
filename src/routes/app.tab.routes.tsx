@@ -8,6 +8,7 @@ import { AppStackRoutes } from './app.stack.routes';
 import { MyCars } from '../screens/MyCars';
 import { useTheme } from 'styled-components';
 import { Platform } from 'react-native';
+import { Profile } from '../screens/Profile';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -26,7 +27,7 @@ export function AppTabRoutes() {
             }}
         >
             <Screen
-                name="Home"
+                name="AppStackRoutes"
                 options={{
                     tabBarIcon: ({ focused, color }) => (
                         <HomeSvg width={24} height={24} fill={focused ? theme.colors.main : color} />
@@ -41,7 +42,7 @@ export function AppTabRoutes() {
                         <ProfileSvg width={24} height={24} fill={focused ? theme.colors.main : color} />
                     )
                 }}
-                component={Home}
+                component={Profile}
             />
             <Screen
                 name="MyCars"
