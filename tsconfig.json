@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
       "strict": true,
+      /* Experimental Options */
+      "experimentalDecorators": true, 
+      "emitDecoratorMetadata": true, 
+      /* Advanced Options */
+      "forceConsistentCasingInFileNames": true ,
       "types": [
         "node"
       ]
