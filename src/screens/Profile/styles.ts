@@ -1,7 +1,11 @@
 import { BorderlessButton, RectButton } from "react-native-gesture-handler";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { RFValue } from "react-native-responsive-fontsize";
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
+
+interface LabelProps {
+    active: boolean;
+}
 
 export const Container = styled.View`
 flex: 1;
@@ -25,7 +29,7 @@ justify-content: space-between;
 margin-top: ${getStatusBarHeight() + 30}px;
 `;
 export const HeaderText = styled.Text`
-font-size: ${RFValue(15)}px;
+font-size: ${RFValue(25)}px;
 font-family: ${({ theme }) => theme.fonts.primary_400};
 color: ${({ theme }) => theme.colors.background_secundary};
 `;
@@ -54,6 +58,36 @@ bottom: 10px;
 right: 10px;
 width: 40px;
 height: 40px;
-background-color: ${({theme}) => theme.colors.main};
+background-color: ${({ theme }) => theme.colors.main};
 `;
+
+export const Content = styled.View`
+flex: 1;
+margin-top: 122px;
+padding: 0px 24px;
+`;
+export const Labels = styled.View`
+height: 38px;
+flex-direction: row;
+align-items: center;
+justify-content: space-around;
+margin-bottom: 24px;
+border-bottom-width: 1px;
+border-bottom-color: ${({ theme }) => theme.colors.line};
+`;
+export const Label = styled.TouchableOpacity<LabelProps>`
+padding-bottom: 14px;
+${({ active }) => active && css`
+    border-bottom-width: 3px;
+    border-bottom-color: ${({ theme }) => theme.colors.main
+    };
+  `}
+`;
+export const Text = styled.Text<LabelProps>`
+font-size: ${RFValue(20)}px;
+  font-family: ${({ theme, active }) => active ? theme.fonts.secundary_600 : theme.fonts.secundary_500};
+color: ${({ theme, active }) => active ? theme.colors.header : theme.colors.text_datails};
+`;
+
+export const Section = styled.View``;
 

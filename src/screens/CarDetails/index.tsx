@@ -15,7 +15,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { StatusBar, StyleSheet } from 'react-native';
-import theme from '../../styles/theme';
+import { useTheme } from "styled-components/native";
 
 interface Params {
     car: Car;
@@ -24,6 +24,7 @@ interface Params {
 export function CarDetails() {
     const navigation = useNavigation<any>();
     const route = useRoute();
+    const theme = useTheme();
     const { car } = route.params as Params;
     const scrollY = useSharedValue(0);
     const scrollHandler = useAnimatedScrollHandler(event => {

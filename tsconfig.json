@@ -7,7 +7,8 @@
       /* Advanced Options */
       "forceConsistentCasingInFileNames": true ,
       "types": [
-        "node"
+        "node",
+        "styled-components-react-native"
       ]
   },
   "extends": "expo/tsconfig.base"

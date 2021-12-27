@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
 import {
     Container,
