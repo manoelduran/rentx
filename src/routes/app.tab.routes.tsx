@@ -3,10 +3,9 @@ import HomeSvg from '../assets/home.svg';
 import CarSvg from '../assets/car.svg';
 import ProfileSvg from '../assets/people.svg';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home } from '../screens/Home';
 import { AppStackRoutes } from './app.stack.routes';
 import { MyCars } from '../screens/MyCars';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/native';
 import { Platform } from 'react-native';
 import { Profile } from '../screens/Profile';
 
@@ -20,7 +19,7 @@ export function AppTabRoutes() {
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                    height: 78,
+                    height: 50,
                     paddingVertical: Platform.OS === 'ios' ? 20 : 0,
                     backgroundColor: theme.colors.background_primary
                 },

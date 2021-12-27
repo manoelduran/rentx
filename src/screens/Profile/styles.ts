@@ -1,14 +1,13 @@
-import { BorderlessButton, RectButton } from "react-native-gesture-handler";
+import { BorderlessButton, RectButton, TouchableOpacity } from "react-native-gesture-handler";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
 
 interface LabelProps {
-    active: boolean;
+  active: boolean;
 }
 
 export const Container = styled.View`
-flex: 1;
 background-color: ${({ theme }) => theme.colors.background_primary};
 `;
 
@@ -62,7 +61,6 @@ background-color: ${({ theme }) => theme.colors.main};
 `;
 
 export const Content = styled.View`
-flex: 1;
 margin-top: 122px;
 padding: 0px 24px;
 `;
@@ -75,8 +73,8 @@ margin-bottom: 24px;
 border-bottom-width: 1px;
 border-bottom-color: ${({ theme }) => theme.colors.line};
 `;
-export const Label = styled.TouchableOpacity<LabelProps>`
-padding-bottom: 14px;
+export const Label = styled(TouchableOpacity) <LabelProps>`
+padding-bottom: 5px;
 ${({ active }) => active && css`
     border-bottom-width: 3px;
     border-bottom-color: ${({ theme }) => theme.colors.main
@@ -89,5 +87,6 @@ font-size: ${RFValue(20)}px;
 color: ${({ theme, active }) => active ? theme.colors.header : theme.colors.text_datails};
 `;
 
-export const Section = styled.View``;
+export const Section = styled.View`
+`;
 

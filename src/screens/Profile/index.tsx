@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import * as ImagePicker from 'expo-image-picker';
 import { BackButton } from "../../components/BackButton";
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 import {
     Container,
@@ -19,9 +21,15 @@ import {
 import { useTheme } from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from "react-native";
+import { PasswordInput } from "../../components/PasswordInput";
+import { Input } from "../../components/Input";
+import { useAuth } from "../../hooks/auth";
 
 export function Profile() {
-    const [avatar, setAvatar] = useState(null);
+    const { user, signOut } = useAuth();
+    const [avatar, setAvatar] = useState(user.avatar);
+    const [driverLicense, setDriverLicense] = useState(user.driver_license);
+    const [name, setName] = useState(user.name);
     const [label, setLabel] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
     const theme = useTheme();
     const navigation = useNavigation<any>();
@@ -29,10 +37,25 @@ export function Profile() {
         navigation.goBack()
     };
     function handleLogout() {
+        signOut();
     }
     function handleLabelChange(selectedLabel: 'dataEdit' | 'passwordEdit') {
         setLabel(selectedLabel)
     }
+    async function handleChangeAvatar() {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1
+        })
+        if (result.cancelled) {
+            return;
+        };
+        if (result.uri) {
+            setAvatar(result.uri)
+        };
+    };
     return (
         <KeyboardAvoidingView behavior="position" enabled>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -53,8 +76,10 @@ export function Profile() {
                             </LogoutButton>
                         </HeaderTop>
                         <PhotoContainer>
-                            <Photo source={{ uri: 'https://github.com/manoelduran.png' }} />
-                            <ChangePhoto>
+                            {!!avatar && <Photo source={{ uri: avatar }} />}
+                            <ChangePhoto
+                                onPress={handleChangeAvatar}
+                            >
                                 <Feather
                                     name="camera"
                                     color={theme.colors.shape}
@@ -63,7 +88,7 @@ export function Profile() {
                             </ChangePhoto>
                         </PhotoContainer>
                     </Header>
-                    <Content>
+                    <Content style={{ marginBottom: useBottomTabBarHeight() }}>
                         <Labels>
                             <Label
                                 active={label === 'dataEdit'}
@@ -86,9 +111,45 @@ export function Profile() {
                                 </Text>
                             </Label>
                         </Labels>
-                        <Section>
-
-                        </Section>
+                        {label === 'dataEdit' ?
+                            <Section>
+                                <Input
+                                    iconName='user'
+                                    placeholder='Nome'
+                                    autoCorrect={false}
+                                    keyboardType='name-phone-pad'
+                                    defaultValue={user.name}
+                                    onChangeText={setName}
+                                />
+                                <Input
+                                    iconName='mail'
+                                    defaultValue={user.email}
+                                    editable={false}
+                                />
+                                <Input
+                                    iconName='credit-card'
+                                    defaultValue={user.driver_license}
+                                    placeholder='CNH'
+                                    keyboardType='numeric'
+                                    onChangeText={setDriverLicense}
+                                />
+                            </Section>
+                            :
+                            <Section>
+                                <PasswordInput
+                                    iconName='lock'
+                                    placeholder='Senha atual'
+                                />
+                                <PasswordInput
+                                    iconName='lock'
+                                    placeholder='Nova senha'
+                                />
+                                <PasswordInput
+                                    iconName='lock'
+                                    placeholder='Repetir nova senha'
+                                />
+                            </Section>
+                        }
                     </Content>
                 </Container >
             </TouchableWithoutFeedback>

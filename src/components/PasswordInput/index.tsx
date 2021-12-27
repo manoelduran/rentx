@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
 import {
     Container,
@@ -51,6 +51,7 @@ export function PasswordInput({ iconName, value, ...rest }: InputProps) {
                 onFocus={handleInputFocused}
                 onBlur={handleInputBlur}
                 isFocused={isFocused}
+                autoCorrect={false}
                 secureTextEntry={isVisible ? false : true}
             />
             <ChangePasswordVisibilityButton
