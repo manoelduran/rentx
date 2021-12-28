@@ -3,6 +3,7 @@ import { User as ModelUser, User } from '../databases/model/user';
 import { database } from '../databases';
 import { api } from '../services/api';
 
+
 interface AuthProvider {
     children: ReactNode;
 };
@@ -23,6 +24,7 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProvider) {
+
     const [data, setData] = useState<User>({} as User);
     async function signIn({ email, password }: SignInCredentials) {
         try {
@@ -55,9 +57,11 @@ function AuthProvider({ children }: AuthProvider) {
                 const userSelected = await userCollection.find(data.id);
                 await userSelected.destroyPermanently();
             });
+            setData({} as User);
         } catch (error) {
             throw new Error(error as string);
         };
+
     };
     useEffect(() => {
         async function loadUserData() {
@@ -69,7 +73,7 @@ function AuthProvider({ children }: AuthProvider) {
                 setData(userDate);
             };
         }
-        loadUserData()
+        loadUserData();
     }, [])
     return (
         <AuthContext.Provider value={{ user: data, signIn, signOut }}>

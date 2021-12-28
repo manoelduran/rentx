@@ -36,9 +36,6 @@ export function Profile() {
     function handleBack() {
         navigation.goBack()
     };
-    function handleLogout() {
-        signOut();
-    }
     function handleLabelChange(selectedLabel: 'dataEdit' | 'passwordEdit') {
         setLabel(selectedLabel)
     }
@@ -54,6 +51,9 @@ export function Profile() {
         };
         if (result.uri) {
             setAvatar(result.uri)
+            console.log('#### URI ###');
+
+            console.log(result.uri)
         };
     };
     return (
@@ -67,7 +67,7 @@ export function Profile() {
                                 onPress={handleBack}
                             />
                             <HeaderText>Editar Perfil</HeaderText>
-                            <LogoutButton onPress={handleLogout}  >
+                            <LogoutButton onPress={signOut}  >
                                 <Feather
                                     name="power"
                                     color={theme.colors.shape}
