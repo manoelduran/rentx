@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'react-native'
+import { Alert, StatusBar } from 'react-native'
 import Logo from '../../assets/logo.svg';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Container, Header, TotalCars, CarList } from './styles';
 import { Car } from '../../components/Car';
 import { useNavigation } from '@react-navigation/native';
 import * as api from '../../services/api';
+import {useNetInfo} from '@react-native-community/netinfo';
 import { LoadAnimation } from '../../components/LoadAnimation';
 
 export function Home() {
+    const netInfo = useNetInfo();
     const navigation = useNavigation<any>();
     const [carList, setCarList] = useState<Car[]>([]);
     const [loading, setLoading] = useState(true);
-
+    function handleCarDetails(car: Car) {
+        navigation.navigate('CarDetails', { car });
+    }
     useEffect(() => {
         let isMounted = true;
         async function fetchCarList() {
@@ -34,9 +38,13 @@ export function Home() {
             isMounted = false;
         }
     }, []);
-    function handleCarDetails(car: Car) {
-        navigation.navigate('CarDetails', { car });
+useEffect(() => {
+    if(netInfo.isConnected){
+        Alert.alert('Você está on')
+    } else{
+        Alert.alert('Você está off')
     }
+}, [netInfo.isConnected])
     return (
         <Container>
             <StatusBar
