@@ -30,7 +30,7 @@ export function Home() {
             },
             pushChanges: async ({ changes }) => {
                 const user = changes.users;
-                await api.post('/users/sync', user);
+                await api.post('/users/sync', user).catch(console.log);
             }
         });
     }
@@ -81,7 +81,7 @@ export function Home() {
                 <LoadAnimation /> :
                 <CarList
                     data={carList}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item: ModelCar) => item.id}
                     renderItem={({ item }) =>
                         <Car data={item} onPress={() => handleCarDetails(item)} />}
                 />
