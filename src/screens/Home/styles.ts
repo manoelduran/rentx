@@ -1,5 +1,5 @@
 import { FlatList } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import {Car as ModelCar} from '../../databases/model/Car';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
@@ -26,7 +26,7 @@ font-family: ${({ theme }) => theme.fonts.primary_400};
 color: ${({ theme }) => theme.colors.text};
 `;
 
-export const CarList = styled(FlatList as new () =>FlatList<Car>).attrs({
+export const CarList = styled(FlatList as new () =>FlatList<ModelCar>).attrs({
     contentContainerStyle: {
         padding: 24
     },
