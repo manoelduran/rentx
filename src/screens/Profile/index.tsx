@@ -26,9 +26,11 @@ import { PasswordInput } from "../../components/PasswordInput";
 import { Input } from "../../components/Input";
 import { useAuth } from "../../hooks/auth";
 import { Button } from "../../components/Button";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 export function Profile() {
     const { user, signOut, updateUser } = useAuth();
+    const netInfo = useNetInfo();
     const [avatar, setAvatar] = useState(user.avatar);
     const [driverLicense, setDriverLicense] = useState(user.driver_license);
     const [name, setName] = useState(user.name);
@@ -39,7 +41,11 @@ export function Profile() {
         navigation.goBack()
     };
     function handleLabelChange(selectedLabel: 'dataEdit' | 'passwordEdit') {
-        setLabel(selectedLabel)
+        if (netInfo.isConnected === false && selectedLabel === 'passwordEdit') {
+            Alert.alert('Para mudar a senha conect-se')
+        } else {
+            setLabel(selectedLabel)
+        }
     }
     async function handleChangeAvatar() {
         const result = await ImagePicker.launchImageLibraryAsync({

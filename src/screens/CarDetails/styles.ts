@@ -75,7 +75,15 @@ line-height: ${RFValue(25)}px;
 
 export const Footer = styled.View`
     width: 100%;
-    background-color: ${({theme}) => theme.colors.background_secundary};
+    background-color: ${({ theme }) => theme.colors.background_secundary};
     padding: 24px 24px;
     padding-bottom: ${getBottomSpace() + 24}px;
+`;
+
+export const OfflineInfo = styled.Text`
+font-size: ${RFValue(15)}px;
+font-family: ${({ theme }) => theme.fonts.primary_400};
+color: ${({ theme }) => theme.colors.main};
+text-align: center;
+margin-top: 23px;
 `;

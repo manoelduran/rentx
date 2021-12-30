@@ -4,7 +4,8 @@ import { Accessory } from '../../components/Accessory';
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
 import { Button } from '../../components/Button';
-import { useTheme } from 'styled-components';
+import { Car as ModelCar } from '../../databases/model/Car';
+import { useTheme } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Container, Header, CarImages, Details, Brand, Name, Rent, Period, Price, Content, Info, CarSkills, Footer, RentalPeriod, CalendarIcon, DateInfo, DateTitle, DateValue, TotalContainer, TotalPriceLabel, RentalPriceDetails, RentalPriceQuota, RentalPriceTotal } from './styles';
@@ -13,6 +14,7 @@ import { format } from 'date-fns';
 import { getPlatformDate } from '../../utils/getPlatformDate';
 import { api } from '../../services/api';
 import { Alert } from 'react-native';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 interface RentalPeriodProps {
     start: string;
@@ -20,12 +22,14 @@ interface RentalPeriodProps {
 };
 
 interface Params {
-    car: Car;
+    car: ModelCar;
     dates: string[];
 };
 
 export function ScheduleDetails() {
+    const [carUpdated, setCarUpdtade] = useState<Car>({} as Car);
     const [rentalPeriod, setRentalPeriod] = useState<RentalPeriodProps>({} as RentalPeriodProps)
+    const netInfo = useNetInfo();
     const [loading, setLoading] = useState(false)
     const theme = useTheme();
     const navigation = useNavigation<any>();
@@ -34,21 +38,13 @@ export function ScheduleDetails() {
     const rentTotal = Number(dates.length * car.price)
     async function handleSuccessSchedule() {
         setLoading(true);
-        const response = await api.get(`/schedules_bycars/${car.id}`);
 
-        const unavailable_dates = [
-            ...response.data.unavailable_dates,
-            ...dates,
-        ];
-        await api.post('schedules_byuser', {
+        await api.post('rentals', {
             user_id: 1,
-            car,
-            startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
-            endDate: format(getPlatformDate(new Date(dates[dates.length - 1])), 'dd/MM/yyyy')
-        })
-        api.put(`/schedules_bycars/${car.id}`, {
-            id: car.id,
-            unavailable_dates
+            car_id: car.id,
+            start_date:  new Date(dates[0]),
+            end_date: new Date(dates[dates.length - 1]),
+            total: rentTotal
         }).then(() => navigation.navigate('Confirmation', {
             nextScreen: 'Home',
             title: 'Carro alugado!!',
@@ -71,13 +67,26 @@ export function ScheduleDetails() {
             end: format(getPlatformDate(new Date(dates[dates.length - 1])), 'dd/MM/yyyy'),
         })
     }, [])
+    useEffect(() => {
+        async function fetchCarUpdated() {
+            const response = await api.get(`/cars/${car.id}`)
+            setCarUpdtade(response.data)
+        }
+       if(netInfo.isConnected === true){
+        fetchCarUpdated()
+       }
+    }, [netInfo.isConnected])
     return (
         <Container>
             <Header>
                 <BackButton onPress={handleBack} />
             </Header>
             <CarImages>
-                <ImageSlider imagesUrl={car.photos} />
+                <ImageSlider imagesUrl={
+                           !!carUpdated.photos ?
+                           carUpdated.photos :
+                           [{ id: car.thumbnail, photo: car.thumbnail }]
+                } />
             </CarImages>
             <Content>
                 <Details>
@@ -90,12 +99,16 @@ export function ScheduleDetails() {
                         <Price>R$ {car.price}</Price>
                     </Rent>
                 </Details>
+                {
+                carUpdated.accessories && 
                 <CarSkills>
-                    {car.accessories.map(accessory => (
-                        <Accessory key={accessory.type} name={accessory.name} icon={getAccessoryIcon(accessory.type)} />
-                    ))
-                    }
-                </CarSkills>
+                {carUpdated.accessories.map(accessory => (
+                    <Accessory key={accessory.type} name={accessory.name} icon={getAccessoryIcon(accessory.type)} />
+                ))
+
+                }
+            </CarSkills>
+            }
                 <RentalPeriod>
                     <CalendarIcon>
                         <Feather
